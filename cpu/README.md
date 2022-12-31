@@ -1,0 +1,60 @@
+# Instructions
+
+
+## reg - immediate Instructions
+1. ADDI
+2. SLTI
+3. SLTIU
+4. ANDI 
+5. ORI 
+6. XORI
+7. SLLI
+8. SRLI
+9. SRAI
+10. LUI
+11. AUIPC
+
+
+
+## reg - reg Instructions
+
+12. ADD 
+13. SLT 
+14. SLTU 
+15. AND 
+16. OR 
+17. XOR 
+18. SLL 
+19. SRL 
+20. SUB
+21. SRA 
+22. NOP
+23. JAL
+24. JALR
+25. BEQ
+26. BNE
+27. BLT
+28. BLTU
+29. BGE
+30. BGEU
+31. LW
+32. LH
+33. LHU
+34. LB
+35. LBU
+36. SW
+37. SH 
+38. SB
+39. MISC_MEM
+40. CSRRW
+41. CSRRS
+42. CSRRC
+43. CSRRWI
+44. CSRRSI
+45. CSRRCI
+46. 
+47. 
+
+
+
+
