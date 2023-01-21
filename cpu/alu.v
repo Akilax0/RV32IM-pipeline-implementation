@@ -1,11 +1,11 @@
 module alu (
    
-    input [31:0] a,
-    input [31:0] b,
-    input [2:0] alu_control,
+    input [31:0] DATA1,
+    input [31:0] DATA2,
+    input [5:0] SELECT,
 
-    output reg [31:0] result,
-    output zero
+    output reg [31:0] RESULT,
+    output ZERO
 );
 
 always @ (*)
