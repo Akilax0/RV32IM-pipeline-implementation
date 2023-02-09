@@ -33,6 +33,46 @@ module alu (DATA1, DATA2, RESULT, SELECT);
     assign  INTER_SLT = DATA1 >>> DATA2;
     assign  INTER_SLTU = DATA1 >>> DATA2;
 
+/*
+ref: https://varshaaks.wordpress.com/2021/07/19/rv32i-base-integer-instruction-set/
+
+
+R -Type
+
+ADD, SUB , OR, XOR, AND
+SLT, SLTU
+SLL, SRL, SRA
+
+I - Type
+
+ADDI, ANDI, ORI, XORI
+SLTI, (SLTUI)
+SLLI, SRLI, SRAI
+
+
+U -Type
+
+LUI
+AUIPC
+
+J - Type
+
+JALR
+JAL
+
+B - Type
+
+BEQ BNEQ    
+BLT BLTU
+BGE BGEU
+
+S - Type
+
+LOAD LW LH LHU LB LBU
+STORE SW SH SB 
+
+*/
+
 always @ (*)
 begin
     case(alu_control)
