@@ -1,17 +1,19 @@
+`timescale 1ns/100ps
+
 // TODO : write testbench 
 module reg_file(IN, OUT1, OUT2, INADDRESS, OUT1ADDRESS, OUT2ADDRESS, WRITE, CLK, RESET);
     
     input   [31:0]  IN; // 32 bit data input
-    input   [4:0]   INADDRESS, OUT1ADDRESS, OUT2ADDRESS;    //5bit data inputs
+    input   [4:0]   INADDRESS, OUT1ADDRESS, OUT2ADDRESS;  //5bit data inputs
     input   WRITE, CLK, RESET;  //1 bit data inputs
-    
     output  [31:0]  OUT1, OUT2; //32 bit data outputs
     
     reg     [31:0]  REGISTERS   [31:0]; //32 bit x 32 register reg_file
 
     // output 
-    assign  OUT1 = REGISTERS[OUT1ADDRESS];
-    assign  OUT2 = REGISTERS[OUT2ADDRESS];
+    // time delays for now
+    assign #2  OUT1 = REGISTERS[OUT1ADDRESS];
+    assign #2  OUT2 = REGISTERS[OUT2ADDRESS];
 
 
     integer i;
@@ -31,6 +33,7 @@ module reg_file(IN, OUT1, OUT2, INADDRESS, OUT1ADDRESS, OUT2ADDRESS, WRITE, CLK,
             begin
                 REGISTERS[INADDRESS] = IN;    
             end
+            //TODO : check for interrupt 
         end
     end
 

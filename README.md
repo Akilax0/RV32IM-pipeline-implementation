@@ -219,3 +219,8 @@ Address of instruction following the jump (pc+4) is written to register rd.
 Register x0 can be used as the destination if teh result is not required.
 
 
+![pipeline](./images/pipeline.ppm)
+
+https://www.csl.cornell.edu/courses/ece5745/handouts/ece5745-tinyrv-isa.txt#:~:text=RISC%2DV%20has%20an%20asymmetric,bit%2031%20of%20the%20instruction.
+
+
