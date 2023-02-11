@@ -31,7 +31,7 @@ always @(*)begin
         if(SELECT[3] == 1'b1)
             OUT = {{11{1'b0}},TYPE2,1'b0};
         else
-            //
+            // 
             OUT = {{11{INST{31}}}, INST[31], INST[19:12], INST[30:21],1'b1}; 
     3'b000:
         OUT = {YPE1, {12{1'b0}}};

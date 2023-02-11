@@ -6,7 +6,7 @@
 <li>supports 32bit 64bit, and 128-bit implementations</li>
 <li>33 registers including $pc, 32 general use 
 <ul><li>x0-x31 + pc</li></ul>
-<li>Given seperate ifentifiers based on use in the RISC-V calling convention (x0 = zero, x1 = ra , etc)</li>
+<li>Given seperate identifiers based on use in the RISC-V calling convention (x0 = zero, x1 = ra (return address), x2 = sp (stack pointer ), x3 = gp (Global pointer), x4 = tp (thread pointer))</li>
 <ul>
 <li>6 special purpose</li>
 <li>7 temp (t0-t6): volatile</li> 
@@ -15,6 +15,7 @@
 </ul>
 </li>
 </ul>
+in addition can have many more. 
 
 ## INTRUCTION 
 
@@ -33,5 +34,10 @@ la a1, helloworld
 </ul>
 
 
-## Setting up 
+# ChibiAkumas
+
+https://www.chibialiens.com/riscv/
+
+
+using RARS simulator for the code. 
 
