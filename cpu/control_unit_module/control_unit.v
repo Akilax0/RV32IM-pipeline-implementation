@@ -30,6 +30,4 @@ module control_unit(INSTRUCTION, alu_signal, reg_file_write, main_mem_write,
     assign funct7 = INSTRUCTION[31:25];
 
     // ALU control signal generation 
-    assign 
-
 endmodule
