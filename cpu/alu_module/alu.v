@@ -49,7 +49,7 @@ module alu (DATA1, DATA2, RESULT, SELECT);
     assign #4 INTER_SRA = DATA1 >>> DATA2;
 
     assign #3 INTER_SLT = ($signed(DATA1) < $signed(DATA2)) ? 1'b1 : 1'b0 ; //set less than
-    assign #3 INTER_SLTU = ($unsigned(DATA1) < $nusigned(DATA2)) ? 1'b1 : 1'b0; // set less than unsigned
+    assign #3 INTER_SLTU = ($unsigned(DATA1) < $unsigned(DATA2)) ? 1'b1 : 1'b0; // set less than unsigned
 
     assign #8 INTER_MUL = DATA1 * DATA2; // multiplication
     // returns upper 32 bits of signed x unsigned  
@@ -112,7 +112,7 @@ begin
         6'b000001:
             RESULT = INTER_SLL;
         6'b000010:
-            RESULT = INTER_SLT
+            RESULT = INTER_SLT;
         6'b000011:
             RESULT = INTER_SLTU;
 
