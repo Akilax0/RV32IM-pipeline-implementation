@@ -24,10 +24,15 @@ module control_unit(INSTRUCTION, alu_signal, reg_file_write, main_mem_write,
     // to select the alu signal between funct3 and predefined 
     // values for JAL & AUIPC
     wire funct3_mux_select; 
+    wire funct3_mux_out; 
 
     assign opcode = INSTRUCTION[6:0];
     assign funct3 = INSTRUCTION[14:12];
     assign funct7 = INSTRUCTION[31:25];
 
     // ALU control signal generation 
+
+
+
+    
 endmodule

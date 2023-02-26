@@ -39,7 +39,7 @@ module cpu(PC, INSTRUCTION, CLK, RESET, memReadEn, memWriteEn, DATA_CACHE_ADDR, 
 
     //units
     // TODO : ALUOUT and BRANCHSELSECT 
-    mux2tol_32bit muxjump(PC_PLUS_4, ALU_OUT, PC_NEXT, BRANCH_SELECT_OUT);
+//    mux2tol_32bit muxjump(PC_PLUS_4, ALU_OUT, PC_NEXT, BRANCH_SELECT_OUT);
 
    // interrupt control unit
    // TODO;
@@ -61,13 +61,13 @@ module cpu(PC, INSTRUCTION, CLK, RESET, memReadEn, memWriteEn, DATA_CACHE_ADDR, 
     // control lines
     reg [3:0] PR_BRANCH_SELECT_S2, PR_MEM_READ_S2;
     reg [5:0] PR_ALU_SELECT;
-    reg PR_OPERAAND1_SEL, PR_OPERAND2_SEL;
+    reg PR_OPERAND1_SEL, PR_OPERAND2_SEL;
     reg [2:0] PR_MEM_WRITE_S2;
     reg [1:0] PR_REG_WRITE_SELECT_S2;
     reg PR_REG_WRITE_EN_S2;
 
     // structure
-    wire [31:0] DATA_S2, DATA_S2, IMMEDIATE_OUT_S2;
+    wire [31:0] DATA1_S2, DATA2_S2, IMMEDIATE_OUT_S2;
     wire [3:0] IMMEDIATE_SELECT;
     wire [3:0] BRANCH_SELECT, MEM_READ_S2;
     wire [5:0] ALU_SELECT; 
@@ -77,18 +77,21 @@ module cpu(PC, INSTRUCTION, CLK, RESET, memReadEn, memWriteEn, DATA_CACHE_ADDR, 
     wire [1:0] REG_WRITE_SELECT_S2;
     wire REG_WRITE_EN_S2;
 
+    // random number generator module
+
     // units 
     // TODO : WRITE_DATA, WRITE_ADDR, WRITE_EN
 
     reg_file myreg (REG_WRITE_DATA
                     DATA1_S2,
                     DATA2_S2,
-                    PR_REGISTER_WRITE_ADDR_S4,
+                    PR_REGISTER_WRITE_ADDR_S2,
                     PR_INSTRUCTION[19:15],
                     PR_INSTRUCTION[24:20],
+                    PR_REG_WRITE_EN_S2,
                     CLK,
                     RESET);
-
+// s2 or s4 ? 
 
     immediate_select myImmediate (PR_INSTRUCTION, IMMEDIATE_SELECT, IMMEDIATE_OUT_S2);
 

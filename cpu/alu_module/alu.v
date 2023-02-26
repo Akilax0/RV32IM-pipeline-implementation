@@ -136,14 +136,14 @@ begin
 
         6'b001100:
             RESULT = INTER_DIV;
-        6'b001011:
+        6'b001101:
             RESULT = INTER_REM;
-        6'b001011:
+        6'b001111:
             RESULT = INTER_REMU;
 
         6'b010000:
             RESULT = INTER_SUB;
-        6'b001001:
+        6'b010101:
             RESULT = INTER_SRA;
         6'b011xxx:
             RESULT = INTER_FWD;
