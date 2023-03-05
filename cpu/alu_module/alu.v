@@ -6,11 +6,12 @@
 module alu (DATA1, DATA2, RESULT, SELECT);
 
     input   [31:0]  DATA1, DATA2;
-    input   [5:0]   SELECT;
+    input   [5:0]   SELECT; // 6bit allocated 5 bit mentioned in paper
     output  [31:0]  RESULT;
 
     reg     [31:0]  RESULT;
 
+    // 18 operations mentioned
     wire    [31:0]  INTER_ADD,
                     INTER_SUB,
                     INTER_AND,
@@ -23,13 +24,14 @@ module alu (DATA1, DATA2, RESULT, SELECT);
                     INTER_SRA,
                     INTER_MUL,
                     INTER_MULH,
-                    INTER_NUMHSU,
+                    INTER_MULHSU,
                     INTER_MULHU,
                     INTER_DIV,
                     INTER_REM,
                     INTER_REMU,
                     INTER_FWD; // intermediate to hold calculation
 
+    // FLOAT not implemented
 
 
 
@@ -124,6 +126,7 @@ begin
             RESULT = INTER_OR;
         6'b000111:
             RESULT = INTER_AND;
+
         // mul command
         6'b001000:
             RESULT = INTER_MUL;
@@ -133,7 +136,6 @@ begin
             RESULT = INTER_MULHSU;
         6'b001011:
             RESULT = INTER_MULHU;
-
         6'b001100:
             RESULT = INTER_DIV;
         6'b001101:

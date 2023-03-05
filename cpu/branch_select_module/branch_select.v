@@ -17,12 +17,12 @@ module branch_select(DATA1, DATA2, SELECT, MUX_OUT);
     always@{*}
     begin
         #2 
-        if (SELECT[2:0])
+        if (SELECT[3])
         begin
             case(SELECT[2:0])
                 // for JAL and JALR
                 3'b010:
-                    MUX_OUT = 1'b1;
+                    MUX_OUT = 1'b1; // NOT IMPLEMENTED
                 // for BEQ
                 3'b000:
                     MUX_OUT = BEQ;

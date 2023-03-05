@@ -20,7 +20,7 @@ module cpu(PC, INSTRUCTION, CLK, RESET, memReadEn, memWriteEn, DATA_CACHE_ADDR, 
     insReadEn, INS_CACHE_BUSY_WAIT);
 
     input [31:0] INSTRUCTION;           // fetched INSTRUCTIONS
-    input CLLK, RESET;                  // clock and reset for the cpu
+    input CLK, RESET;                  // clock and reset for the cpu
     input DATA_CACHE_BUSY_WAIT;         // busy wait signal from the memory
     input INS_CACHE_BUSY_WAIT;          // busy wait from the instruction memory 
     input [31:0] DATA_CACHE_READ_DATA;     // input from the memory read
