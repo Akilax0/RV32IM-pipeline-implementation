@@ -33,8 +33,6 @@ module alu (DATA1, DATA2, RESULT, SELECT);
 
     // FLOAT not implemented
 
-
-
     //time delay set temp for operations
     assign #1 INTER_FWD = DATA2;
 

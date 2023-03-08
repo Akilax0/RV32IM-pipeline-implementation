@@ -11,6 +11,4 @@ module alu_tb;
     // Instantiate ALU module
     alu myALU(DATA1, DATA2, RESULT, SELECT);
 
-
-
 endmodule
