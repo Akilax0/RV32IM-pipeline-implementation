@@ -35,35 +35,35 @@ module alu (DATA1, DATA2, RESULT, SELECT);
 
 
     //time delay set temp for operations
-    assign #1 INTER_FWD = DATA2;
+    assign INTER_FWD = DATA2;
 
-    assign #3 INTER_ADD = DATA1 + DATA2;
-    assign #3 INTER_SUB = DATA1 - DATA2;
-    assign #3 INTER_AND = DATA1 & DATA2;
-    assign #3 INTER_OR = DATA1 | DATA2;
-    assign #3 INTER_XOR = DATA1 ^ DATA2;
+    assign INTER_ADD = DATA1 + DATA2;
+    assign INTER_SUB = DATA1 - DATA2;
+    assign INTER_AND = DATA1 & DATA2;
+    assign INTER_OR = DATA1 | DATA2;
+    assign INTER_XOR = DATA1 ^ DATA2;
 
     // logical shift 
-    assign #4 INTER_SLL = DATA1 << DATA2;
-    assign #4 INTER_SRL = DATA1 >> DATA2;
+    assign  INTER_SLL = DATA1 << DATA2;
+    assign  INTER_SRL = DATA1 >> DATA2;
     // arithmetic shift right
-    assign #4 INTER_SRA = DATA1 >>> DATA2;
+    assign  INTER_SRA = DATA1 >>> DATA2;
 
-    assign #3 INTER_SLT = ($signed(DATA1) < $signed(DATA2)) ? 1'b1 : 1'b0 ; //set less than
-    assign #3 INTER_SLTU = ($unsigned(DATA1) < $unsigned(DATA2)) ? 1'b1 : 1'b0; // set less than unsigned
+    assign  INTER_SLT = ($signed(DATA1) < $signed(DATA2)) ? 1'b1 : 1'b0 ; //set less than
+    assign  INTER_SLTU = ($unsigned(DATA1) < $unsigned(DATA2)) ? 1'b1 : 1'b0; // set less than unsigned
 
-    assign #8 INTER_MUL = DATA1 * DATA2; // multiplication
+    assign  INTER_MUL = DATA1 * DATA2; // multiplication
     // returns upper 32 bits of signed x unsigned  
-    assign #8 INTER_MULHSU = $signed(DATA1) * $signed(DATA2); 
+    assign  INTER_MULHSU = $signed(DATA1) * $signed(DATA2); 
     // returns upper 32 bits of unsigned x unsigned  
-    assign #8 INTER_MULHU = $unsigned(DATA1) * $unsigned(DATA2); // multiplication
+    assign  INTER_MULHU = $unsigned(DATA1) * $unsigned(DATA2); // multiplication
 
     // signed integer division
-    assign #8 INTER_DIV = $signed(DATA1) / $signed(DATA2);
-    assign #8 INTER_REM = $signed(DATA1) % $signed(DATA2);
+    assign  INTER_DIV = $signed(DATA1) / $signed(DATA2);
+    assign  INTER_REM = $signed(DATA1) % $signed(DATA2);
 
     // unsigned remainder
-    assign #8 INTER_REMU = $unsigned(DATA1) % $unsigned(DATA2);
+    assign  INTER_REMU = $unsigned(DATA1) % $unsigned(DATA2);
 
 /*
 ref: https://varshaaks.wordpress.com/2021/07/19/rv32i-base-integer-instruction-set/
