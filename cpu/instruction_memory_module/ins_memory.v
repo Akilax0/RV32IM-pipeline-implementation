@@ -1,4 +1,12 @@
 module ins_memory(CLK, READ, ADDRESS, READDATA, BUSYWAIT);
+
+// insutruction memory with 1024 bytes
+// byte addressing
+// serve data blocks of 16 bytes (4 words)
+// 28 bit to address a block
+// .bin file - 1024 bytes of instruction data
+// 40 time units to simulate block fetching delay
+
     input CLK, READ;
     // input   [31:0]    ADDRESS;
     // output reg [31:0]   READDATA;
@@ -15,7 +23,7 @@ module ins_memory(CLK, READ, ADDRESS, READDATA, BUSYWAIT);
 
     // Declare memory array 1024 x 8 bits
     reg [7:0] memory_array [0:1023];
-
+ 
     // ================= for simulation ============
 
     // initial begin
@@ -23,7 +31,6 @@ module ins_memory(CLK, READ, ADDRESS, READDATA, BUSYWAIT);
     // end
 
     // ==============================================
-
     // UNCOMMENT FOR FPGA
 
     // // Detecting an incoming memory access
@@ -108,7 +115,7 @@ module ins_memory(CLK, READ, ADDRESS, READDATA, BUSYWAIT);
         BUSYWAIT = (READ)? 1 : 0;
         READ_ACCESS = (READ)? 1 : 0;
     end
-
+    
     //Reading
     always @(posedge CLK)
     begin
