@@ -46,4 +46,27 @@ module data_cache_memory(
     parameter IDLE = 2'b00, MEM_READ = 2'b01,MEM_WRITE = 2'b10;
     reg [1:0] state, next_state;
 
+    // variables to handle state changesc
+    reg CURRENT_DIRTY, CURRENT_VALID;
+    reg [24:0] CURRENT_TAG;
+    reg [127:0] CURRENT_DATA;
+    wire TAG_MATCH;
+
+    // temporary variable to hold the data from the cache 
+    reg [31:0] temporary_data;
+
+
+    // variables to hold the values of the memory module
+    reg MAIN_MEM_READ, MAIN_MEM_WRITE;
+    reg [27:0] MAIN_MEM_ADDRESS;
+    reg [127:0] MAIN_MEM_WRITE_DATA;
+    reg [127:0] MAIN_MEM_READ_DATA;
+    wire MAIN_MEM_BUSY_WAIT;
+
+    reg [31:0] cache_readdaata, cache_writedata;
+    reg readCache; // reg to remember the read to cache signal until the posedge
+    reg writeCache; // reg to write 
+
+    reg writeCache_mem; // write enable signal to write to the cache mem after a memory read
+
 
