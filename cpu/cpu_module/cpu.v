@@ -32,7 +32,6 @@ module cpu(PC, INSTRUCTION, CLK, RESET, memReadEn, memWriteEn, DATA_CACHE_ADDR, 
 
     wire FLUSH;
 
-
 //================= STAGE 1 ==========================
 
     //data lines
@@ -51,7 +50,6 @@ module cpu(PC, INSTRUCTION, CLK, RESET, memReadEn, memWriteEn, DATA_CACHE_ADDR, 
 
    // interrupt control unit
    // TODO;
-
 
    always @(posedge CLK)
    begin   
@@ -114,7 +112,6 @@ module cpu(PC, INSTRUCTION, CLK, RESET, memReadEn, memWriteEn, DATA_CACHE_ADDR, 
                             REG_WRITE_SELECT_S2,
                             RESET);
 
-
 //================= STAGE 3 ==========================
 
     reg [31:0] PR_PC_S3, PR_ALU_OUT_S3, PR_DATA_2_S3;
@@ -169,7 +166,6 @@ module cpu(PC, INSTRUCTION, CLK, RESET, memReadEn, memWriteEn, DATA_CACHE_ADDR, 
     );
 
 //================= STAGE 4 ==========================
-
     // data lines
     reg [31:0] PR_PC_S4, PR_ALU_OUT_S4, PR_DATA_CACHE_OUT;
     reg [4:0] PR_REGISTER_WRITE_ADDR_S4;
@@ -202,8 +198,6 @@ module cpu(PC, INSTRUCTION, CLK, RESET, memReadEn, memWriteEn, DATA_CACHE_ADDR, 
 
     mux2to1_32bit stage4_forward_unit_mux(PR_DATA_2_S3, PR_DATA_CACHE_OUT, HAZ_MUX_OUT, HAZ_MUX_SEL);
 
-
-
 //================= STAGE 5 ==========================
     // EXTRA pipeline registers to handle the fowarding 
     // data lines
@@ -221,8 +215,6 @@ module cpu(PC, INSTRUCTION, CLK, RESET, memReadEn, memWriteEn, DATA_CACHE_ADDR, 
     mux4to1_32bit regWriteSelMUX (PR_DATA_CACHE_OUT, PR_ALU_OUT_S4, 32'b0, PR_PC_S4, REG_WRITE_DATA, PR_REG_WRITE_SELECT_S4);
 
     // connections
-
-
 
     // register updating section 
     always @ (posedge CLK) begin
