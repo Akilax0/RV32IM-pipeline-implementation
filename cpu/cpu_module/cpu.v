@@ -2,6 +2,8 @@
 `include "../reg_file_module/reg_file.v"
 
 `include "../supported_modules/mux2to1_3bit.v"
+
+`include "../supported_modules/mux2to1_3bit.v"
 `include "../supported_modules/mux4to1_32bit.v"
 `include "../supported_modules/mux2to1_32bit.v"
 
