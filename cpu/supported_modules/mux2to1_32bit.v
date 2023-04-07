@@ -1,4 +1,4 @@
-`timescale 1ps/100ps
+`timescale 1ns/100ps
 
 module mux2to1_32bit(INPUT1, INPUT2, RESULT, SELECT);
     input [31:0] INPUT1, INPUT2;

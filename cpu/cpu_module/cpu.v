@@ -1,7 +1,7 @@
+`timescale 1ns/100ps
+
 `include "../alu_module/alu.v"
 `include "../reg_file_module/reg_file.v"
-
-`include "../supported_modules/mux2to1_3bit.v"
 
 `include "../supported_modules/mux2to1_3bit.v"
 `include "../supported_modules/mux4to1_32bit.v"
@@ -90,7 +90,7 @@ module cpu(PC, INSTRUCTION, CLK, RESET, memReadEn, memWriteEn, DATA_CACHE_ADDR, 
     // units 
     // TODO : WRITE_DATA, WRITE_ADDR, WRITE_EN
 
-    reg_file myreg (REG_WRITE_DATA
+    reg_file myreg (REG_WRITE_DATA,
                     DATA1_S2,
                     DATA2_S2,
                     PR_REGISTER_WRITE_ADDR_S2,
@@ -134,25 +134,23 @@ module cpu(PC, INSTRUCTION, CLK, RESET, memReadEn, memWriteEn, DATA_CACHE_ADDR, 
     wire BRANCH_SELECT_OUT; 
 
     // HAZARDS??
-    wire [31:0] OP1_HAZ_MUX_OUT. OP2_HAX_MUX_OUT;
+    wire [31:0] OP1_HAZ_MUX_OUT, OP2_HAZ_MUX_OUT;
     wire [1:0] OP1_HAZ_MUX_SEL, OP2_HAZ_MUX_SEL;
 
     assign FLUSH = BRANCH_SELECT_OUT;
     // NOTE Check the temp  wires somehtings up here
-    mux4to1_32bit operand1_mux_haz(PR_DATA_1_S2, PR_ALU_OUT_S3, REG_WRITE_DATA,
-        REG_WRITE_DATA_S5, OP1_HAZ_MUX_OUT, OP1_HAZ_MUX_SEL);
-    mux4to1_32bit operand2_mux_haz(PR_DATA_2_S2, PR_ALU_OUT_S3, REG_WRITE_DATA,
-        REG_WRITE_DATA_S5, OP2_HAZ_MUX_OUT, OP2_HAZ_MUX_SEL);
+    mux4to1_32bit operand1_mux_haz(PR_DATA_1_S2, PR_ALU_OUT_S3, REG_WRITE_DATA,REG_WRITE_DATA_S5, OP1_HAZ_MUX_OUT, OP1_HAZ_MUX_SEL);
+    mux4to1_32bit operand2_mux_haz(PR_DATA_2_S2, PR_ALU_OUT_S3, REG_WRITE_DATA,REG_WRITE_DATA_S5, OP2_HAZ_MUX_OUT, OP2_HAZ_MUX_SEL);
 
     mux2to1_32bit operand1_mux (OP1_HAZ_MUX_OUT, PR_PC_S2, ALU_IN_1, PR_OPERAND1_SEL);
     mux2to1_32bit operand2_mux (OP2_HAZ_MUX_OUT, PR_IMMEDIATE_SELECT_OUT, ALU_IN_2, PR_OPERAND2_SEL);
 
     alu myAlu (ALU_IN_1, ALU_IN_2, ALU_OUT, PR_ALU_SELECT);
-    branch_select myBranchSelect(OP1_HAZ_MUX_OUT, OP2_HAX_MUX_OUT, PR_BRANCH_SELECT_S2, BRANCH_SELECT_OUT);
+    branch_select myBranchSelect(OP1_HAZ_MUX_OUT, OP2_HAZ_MUX_OUT, PR_BRANCH_SELECT_S2, BRANCH_SELECT_OUT);
 
     // forwading unit in stage 3
     stage3_forward_unit myStage3Forwarding (
-        PR_MEM_WRITE_S2[2].
+        PR_MEM_WRITE_S2[2],
         REG_READ_ADDR1_S2, 
         REG_READ_ADDR2_S2,
         PR_OPERAND1_SEL,
@@ -207,7 +205,7 @@ module cpu(PC, INSTRUCTION, CLK, RESET, memReadEn, memWriteEn, DATA_CACHE_ADDR, 
     reg [4:0] PR_REGISTER_WRITE_ADDR_S5;
 
     // control lines
-    regt PR_REG_WRITE_EN_S5;
+    reg PR_REG_WRITE_EN_S5;
 
     // structure
     // additional wires
@@ -248,7 +246,7 @@ module cpu(PC, INSTRUCTION, CLK, RESET, memReadEn, memWriteEn, DATA_CACHE_ADDR, 
                 #0.001
                 PR_REGISTER_WRITE_ADDR_S3 = PR_REGISTER_WRITE_ADDR_S2;
                 PR_PC_S3 = PR_PC_S2;
-                PR_ALU_OUT_S3 = OP2_HAX_MUX_OUT;
+                PR_ALU_OUT_S3 = OP2_HAZ_MUX_OUT;
                 REG_READ_ADDR2_S3 = REG_READ_ADDR2_S2;
 
                 PR_MEM_READ_S3 = PR_MEM_READ_S2;
@@ -338,7 +336,7 @@ module cpu(PC, INSTRUCTION, CLK, RESET, memReadEn, memWriteEn, DATA_CACHE_ADDR, 
                 // *************************** STAGE 1 *******************************
                 #0.001
                 PR_INSTRUCTION = INSTRUCTION;
-                PR_PC_S1 = PC // PC_PLUS_4
+                PR_PC_S1 = PC; // PC_PLUS_4
             end
         end
     end

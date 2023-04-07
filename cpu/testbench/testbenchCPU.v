@@ -75,7 +75,7 @@ module testbenchCPU;
                           mycpu.myreg.REGISTERS[3], mycpu.myreg.REGISTERS[4], mycpu.myreg.REGISTERS[5], 
                           mycpu.myreg.REGISTERS[6], mycpu.myreg.REGISTERS[7]);
       // generate files needed to plot the waveform using GTKWave
-      $dumpfile("../build/cpu_wavedata.vcd");
+      $dumpfile("../../build/cpu_wavedata.vcd");
       $dumpvars(0, testbenchCPU);
     end
 

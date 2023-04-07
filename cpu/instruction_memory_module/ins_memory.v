@@ -1,3 +1,5 @@
+`timescale 1ns/100ps
+
 module ins_memory(CLK, READ, ADDRESS, READDATA, BUSYWAIT);
 
 // insutruction memory with 1024 bytes

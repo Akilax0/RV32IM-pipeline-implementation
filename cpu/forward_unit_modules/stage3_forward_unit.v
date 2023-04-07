@@ -1,6 +1,6 @@
 `timescale  1ns/100ps
 
-module stage3_forward_unit(MEM_WRITE, ADDR1, ADDR2, OP1_MUX, OP2_MUX, STAGE_3_ADDR, STAGE_3_REGWRITE_EN, STAGE_4_ADDR, STAGE_4_REGWRITE_EN, STAGE_5_EXTRA_ADDR, STAGE_5_EXTRA_REGWRITE_EN, OP1_MUX_OUT, OP2_MUX_OUT ;
+module stage3_forward_unit(MEM_WRITE, ADDR1, ADDR2, OP1_MUX, OP2_MUX, STAGE_3_ADDR, STAGE_3_REGWRITE_EN, STAGE_4_ADDR, STAGE_4_REGWRITE_EN, STAGE_5_EXTRA_ADDR, STAGE_5_EXTRA_REGWRITE_EN, OP1_MUX_OUT, OP2_MUX_OUT);
     input [4:0] ADDR1, ADDR2;
     input OP1_MUX, OP2_MUX;
     input [4:0] STAGE_3_ADDR, STAGE_4_ADDR, STAGE_5_EXTRA_ADDR;
@@ -22,7 +22,7 @@ module stage3_forward_unit(MEM_WRITE, ADDR1, ADDR2, OP1_MUX, OP2_MUX, STAGE_3_AD
                 // forwarding data from stage 4
                 OP1_MUX_OUT = 2'b10;
             end
-        else if(STAGE_5_REGWRITE_EN == 1'b1 && STAGE_5_EXTRA_ADDR == ADDR1)
+        else if(STAGE_5_EXTRA_REGWRITE_EN == 1'b1 && STAGE_5_EXTRA_ADDR == ADDR1)
             begin
                 // forwarding data from stage 5 extra stage for forwading 
                 OP1_MUX_OUT = 2'b11;
@@ -40,12 +40,12 @@ module stage3_forward_unit(MEM_WRITE, ADDR1, ADDR2, OP1_MUX, OP2_MUX, STAGE_3_AD
                 // forwading the data from stage 3
                 OP2_MUX_OUT = 2'b01;
             end
-        else if (STAGE_4_REGWRITE_EN == 1'b1 && STAGE_4_EXTRA_ADDR == ADDR2)
+        else if (STAGE_4_REGWRITE_EN == 1'b1 && STAGE_4_ADDR == ADDR2)
             begin
                 // forwading the data from stage 4 
                 OP2_MUX_OUT = 2'b10;
             end
-        else if (STAGE_5_REGWRITE_EN == 1'b1 && STAGE_5_EXTRA_ADDR == ADDR2)
+        else if (STAGE_5_EXTRA_REGWRITE_EN == 1'b1 && STAGE_5_EXTRA_ADDR == ADDR2)
             begin
                 // forwading the data from stage 5 extra stage for forwading 
                 OP2_MUX_OUT = 2'b11;

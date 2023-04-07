@@ -208,7 +208,7 @@ module ins_cache_memory(
     end
 
     // to deassert and write back to the posedge
-    always @ (posedge clock
+    always @ (posedge clock)
     begin
         if(readCache)
         begin

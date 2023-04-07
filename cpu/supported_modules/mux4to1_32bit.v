@@ -1,8 +1,8 @@
-`timescale 1ns/100px
+`timescale 1ns/100ps
 
 module mux4to1_32bit(INPUT1,INPUT2,INPUT3,INPUT4,RESULT,SELECT);
 
-    input [31:0] INPUT1,INPUT2,INPUT3,INPUT;
+    input [31:0] INPUT1,INPUT2,INPUT3,INPUT4;
     input [1:0] SELECT;
     output reg [31:0] RESULT;
 

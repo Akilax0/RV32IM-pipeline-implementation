@@ -11,6 +11,7 @@ module data_cache_memory(
     busywait,
     MAIN_MEM_READ,
     MAIN_MEM_WRITE,
+    MAIN_MEM_ADDRESS,
     MAIN_MEM_WRITE_DATA,
     MAIN_MEM_READ_DATA,
     MAIN_MEM_BUSY_WAIT
@@ -60,10 +61,10 @@ module data_cache_memory(
     reg MAIN_MEM_READ, MAIN_MEM_WRITE;
     reg [27:0] MAIN_MEM_ADDRESS;
     reg [127:0] MAIN_MEM_WRITE_DATA;
-    reg [127:0] MAIN_MEM_READ_DATA;
+    wire [127:0] MAIN_MEM_READ_DATA;
     wire MAIN_MEM_BUSY_WAIT;
 
-    reg [31:0] cache_readdaata, cache_writedata;
+    reg [31:0] cache_readdata, cache_writedata;
     reg readCache; // reg to remember the read to cache signal until the posedge
     reg writeCache; // reg to write 
 
@@ -87,40 +88,40 @@ module data_cache_memory(
             3'b000: //Load Byte
                 case(byte_offset)
                     2'b00:
-                        readdata = {{24{cache_readdaata[7]}}, cache_readdaata[7:0]};
+                        readdata = {{24{cache_readdata[7]}}, cache_readdata[7:0]};
                     2'b01:
-                        readdata = {{24{cache_readdaata[15]}}, cache_readdaata[15:8]};
+                        readdata = {{24{cache_readdata[15]}}, cache_readdata[15:8]};
                     2'b10:
-                        readdata = {{24{cache_readdaata[23]}}, cache_readdaata[23:16]};
+                        readdata = {{24{cache_readdata[23]}}, cache_readdata[23:16]};
                     2'b11:
-                        readdata = {{24{cache_readdaata[31]}}, cache_readdaata[31:24]};
+                        readdata = {{24{cache_readdata[31]}}, cache_readdata[31:24]};
                 endcase
             3'b001: // LH
                 case(byte_offset)
                     2'b00:
-                        readdata = {{16{cache_readdata[15]}}, cache_readdaata[15:0]};
+                        readdata = {{16{cache_readdata[15]}}, cache_readdata[15:0]};
                     2'b01:
-                        readdata = {{16{cache_readdata[31]}}, cache_readdaata[31:16]};
+                        readdata = {{16{cache_readdata[31]}}, cache_readdata[31:16]};
                 endcase
             3'b010: // LW
-                readdata - cache_readdaata;
+                readdata = cache_readdata;
             3'b100: //LBU
                 case(byte_offset)
                     2'b00:
-                        readdata  = {24'b0, cache_readdaata[7:0]};
+                        readdata  = {24'b0, cache_readdata[7:0]};
                     2'b01:
-                        readdata  = {24'b0, cache_readdaata[15:8]};
+                        readdata  = {24'b0, cache_readdata[15:8]};
                     2'b10:
-                        readdata  = {24'b0, cache_readdaata[23:16]};
+                        readdata  = {24'b0, cache_readdata[23:16]};
                     2'b11:
-                        readdata  = {24'b0, cache_readdaata[13:24]};
+                        readdata  = {24'b0, cache_readdata[31:24]};
                 endcase
             3'b001: // LHU
                 case(byte_offset)
                     2'b00:
-                        readdata = {{16'b0, cache_readdaata[15:0]};
+                        readdata = {16'b0, cache_readdata[15:0]};
                     2'b01:
-                        readdata = {{16'b0, cache_readdaata[31:16]};
+                        readdata = {16'b0, cache_readdata[31:16]};
                 endcase
         endcase
     end
@@ -154,13 +155,13 @@ module data_cache_memory(
             // fetching data
             case(offset)
                 2'b00:
-                    cache_readdaata = data_array[index][31:0];
+                    cache_readdata = data_array[index][31:0];
                 2'b01:
-                    cache_readdaata = data_array[index][63:32];
+                    cache_readdata = data_array[index][63:32];
                 2'b10:
-                    cache_readdaata = data_array[index][95:64];
+                    cache_readdata = data_array[index][95:64];
                 2'b11:
-                    cache_readdaata = data_array[index][127:96];
+                    cache_readdata = data_array[index][127:96];
             endcase
         end
     end
@@ -176,7 +177,7 @@ module data_cache_memory(
         else
             busywait = 1'b0;
         readaccess = (read[3] && !write[2]) ? 1:0;
-        writeaccess = (!read[3]) && write[2]) ? 1:0;
+        writeaccess = (!read[3] && write[2]) ? 1:0;
 
     end
 
@@ -209,7 +210,7 @@ module data_cache_memory(
                         // next_state = IDLE;
                         if (CURRENT_VALID && !TAG_MATCH)
                             next_state = MEM_READ;
-                        else:
+                        else
                             next_state = IDLE;
                     end
         endcase
@@ -279,8 +280,8 @@ module data_cache_memory(
     begin
         if(reset)
         begin
-            budywait = 1'b0;
-            for (i=0;i<8;i=i=1) // resetting the registers
+            busywait = 1'b0;
+            for (i=0;i<8;i=i+1) // resetting the registers
                 begin
                     data_array[i] = 0;
                     valid_bit_array[i] = 0;
@@ -299,6 +300,7 @@ module data_cache_memory(
             begin
                 state = IDLE;
                 next_state = IDLE;
+            end
     end
 
 
@@ -318,7 +320,7 @@ module data_cache_memory(
     end
 
     // calculating the byte mask
-    reg[31:0] write_mask;
+    reg [31:0] write_mask;
     always@(*)
     begin
         case (write[1:0])
@@ -400,7 +402,7 @@ module data_cache_memory(
 
             dirty_bit_array[index] = 1'b1; // set dirty bit because data not consistent with the memory 
             writeCache = 1'b0; // pull the write signal to low
-            budywait = 1'b0; // set the busy wait signal to zero
+            busywait = 1'b0; // set the busy wait signal to zero
 
         end
 
